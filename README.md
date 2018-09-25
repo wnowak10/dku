@@ -17,13 +17,15 @@ $ pip install -r requirements.txt
 
 This file uses `pkl`ed predictions which are generated in `pipeline.py`.
 
-3. To see "audit", see:
+2. To see "audit", see:
 
 - `eda.py` for visualizations.
 - `correlations.py` for bivariate statistical testing.
 
-4. Some reflections on this challenge:
+3. Some reflections on this challenge:
 
+
+- This was a lot to take on in a quick period of time. Apologies in advance for typos, model underperformance, lack of code prettiness...
 - The data is imbalanced. As a result, I tried to built 2 models -- one on the entire training set, and one on a set where the `0` class was under sampled ... in theory allowing us to build a classifier which looked for more nuance in the `1` classes (as opposed to just predicting `0` each time, which would give ~93% accuracy). 
 - I spend some time looking at plots and creating features, but more time and experimentation would likely improve things.
 - I used GridSearchCV to optimize hyper parameters.
