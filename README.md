@@ -1,7 +1,7 @@
 # Write up
 
 
-0. Setup:
+1. Setup:
 
 ```
 $ conda create -n dku python=3.6
@@ -11,13 +11,17 @@ $ conda create -n dku python=3.6
 $ pip install -r requirements.txt
 ```
 
-1. To get final, assembled model accuracy, run:
+2. To get final, assembled model accuracy, run:
 
-`$ python ensemble.py`
+`$ python ensemble.py`. 
 
+which returns:
+
+ >`Fully held out accuracy is 0.954.`
+ 
 This file uses `pkl`ed predictions which are generated in `pipeline.py`.
 
-2. To see "audit", see:
+2. To see "audit", see these files:
 
 - `eda.py` for visualizations.
 - `correlations.py` for bivariate statistical testing.
@@ -25,7 +29,7 @@ This file uses `pkl`ed predictions which are generated in `pipeline.py`.
 3. Some reflections on this challenge:
 
 
-- This was a lot to take on in a quick period of time. Apologies in advance for typos, model underperformance, lack of code prettiness...
+- This was a lot to take on in a quick period of time.  Apologies in advance for typos, model underperformance, lack of code prettiness, as the past and present week have been businer than anticipated....
 - The data is imbalanced. As a result, I tried to built 2 models -- one on the entire training set, and one on a set where the `0` class was under sampled ... in theory allowing us to build a classifier which looked for more nuance in the `1` classes (as opposed to just predicting `0` each time, which would give ~93% accuracy). 
 - I spend some time looking at plots and creating features, but more time and experimentation would likely improve things.
 - I used GridSearchCV to optimize hyper parameters.
