@@ -46,12 +46,31 @@ def preprocess(df, edit = False):
 	"""
 	df['binary_income'] = np.where(df['binary_income'].str.contains('-'), 0, 1)
 	y = df['binary_income']
+	TRAINING_SET_MEAN = y.mean()
 	if edit:
-		pass
-	return df, y
+		# If they make over $100 / hr and less than $50k a year, assume this $100/hr is a mistake.
+		df['wage'] = np.where(((df['wage'] > 100) & (df['capital_gains'] == 0) & (df['capital_gains'] == 0)), df['wage'].median(), df['wage'])
+		# df['wage'] = np.where(((df['wage'] > 50) & (df['binary_income'] == 0)), df['wage'].median(), df['wage'])
+		# df['wage'] = np.where( ( (df['wage']==0) & (df['binary_income'] == 1) ), df['wage'].mean(), df['wage'])
+		df['ttl_clcltd_ernings'] = 40*df['wage']*df['weeks']
 
-df, y = preprocess(df)
+		df['professional'] = np.where(df['majoroc'].str.contains('Professional|Executive|Sales|Precision',regex = True), 1,0)
+		df['white'] = np.where(df['mace'].str.contains('White|Asian',regex = True), 1,0)
+		df['ad_degree'] = np.where(df['education'].str.contains('Bachelors|Doctorate|Masters|Prof',regex = True), 1,0)
+		df['younger22'] = np.where(df['age']<22, 1,0)
+		df['older65'] = np.where(df['age']>65, 1,0)
+		df['occupation2'] = np.where(df['occupation'] == 2, 1,0)
+		
+		# df['log_cgs'] = np.log(df['capital_gains'])
 
-test, test_y = preprocess(test)
+		df['jointu65_tax'] = np.where(df['tax'] == 'Joint both under 65', 1,0)
+		# df['employed?'] = np.where(df['full'] == 'Full-time schedules', 1, 0)
+	return df, y, TRAINING_SET_MEAN
+
+df, y, TRAINING_SET_MEAN = preprocess(df, edit = True)
+
+# print(df[df['wage2']>100][['wage', 'binary_income']])
+# print(df['wage2'].isnull())
+test, test_y, _ = preprocess(test, edit = True)
 
 
