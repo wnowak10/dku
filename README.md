@@ -1,7 +1,33 @@
 # Write up
 
-asdasd
 
+0. Setup:
+
+```
+$ conda create -n dku python=3.6
+
+# source activate dku
+
+$ pip install -r requirements.txt
+```
+
+To get final, assembled model accuracy, run:
+
+`$ python ensemble.py`
+
+This file uses `pkl`ed predictions which are generated in `pipeline.py`.
+
+To see "audit", see:
+
+- `eda.py` for visualizations.
+- `correlations.py` for bivariate statistical testing.
+
+Some reflections on this challenge:
+
+- The data is imbalanced. As a result, I tried to built 2 models -- one on the entire training set, and one on a set where the `0` class was under sampled ... in theory allowing us to build a classifier which looked for more nuance in the `1` classes (as opposed to just predicting `0` each time, which would give ~93% accuracy). 
+- I spend some time looking at plots and creating features, but more time and experimentation would likely improve things.
+- I used GridSearchCV to optimize hyper parameters.
+- I used a boosted decision tree as they tend to perform well with class imbalanced prediction problems, and they are fast to train, resistant to overfitting, and better able to handle non-linearities. I also tried logistic regression and random forests. I did not try to architect a neural network. 
 
 ---------------
 
